@@ -176,3 +176,13 @@ gulp.task('default', () => {
     runSequence(['clean', 'wiredep'], 'build', resolve);
   });
 });
+
+// var uglify = require('gulp-uglify'),
+//     concat = require('gulp-concat');
+
+// gulp.task('js', function() {
+//   gulp.src('scripts/modules/*.js')
+//   .pipe(uglify())
+//   .pipe(concat('script.js'))
+//   .pipe(gulp.dest('assets'))
+// });
