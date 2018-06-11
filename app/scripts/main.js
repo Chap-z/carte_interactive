@@ -27,10 +27,15 @@ function getStations() {
 }
 
 function stationPointer(idStation) {
-    getRealTime();
     console.log(idStation);
 
+    ginkoAPI("TR/getTempsLieu", {
+        'nom': idStation
+    }, function (listeTemps) {
+        console.log(listeTemps);
+    });
 }
+
 
 
 function map(x, y, idStation) {
@@ -48,17 +53,4 @@ function map(x, y, idStation) {
 
         stationPointer(idStation)
     }, false);
-}
-
-function getRealTime() {
-    ginkoAPI("TR/getTempsLieu", {}, function (idStation) {
-        console.log("Résultat de getLignes:", idStation);
-        listeTemps.forEach(function (idStation) {
-            console.log(idStation);
-            
-        });
-        
-    }, function (msg) {
-        document.getElementById("data").innerHTML = msg;
-    });
 }
