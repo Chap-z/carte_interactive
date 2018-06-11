@@ -3,7 +3,9 @@ var mymap = L.map('mapid').setView([47.237829, 6.0240539], 13);
 getStations();
 
 function getStations() {
-    ginkoAPI("DR/getArrets", {}, function (listeArret) {
+    ginkoAPI("DR/getArrets", {
+
+    }, function (listeArret) {
         console.log("Résultat de getLignes:", listeArret);
         var BreakException = {};
         try {
@@ -31,8 +33,14 @@ function stationPointer(idStation) {
 
     ginkoAPI("TR/getTempsLieu", {
         'nom': idStation
-    }, function (listeTemps) {
-        console.log(listeTemps);
+    }, function(infosArret) {
+
+        console.log(infosArret);
+        
+        infosArret.listeTemps.forEach(function (prochainBus) {
+            
+            console.log(prochainBus);
+        });
     });
 }
 
