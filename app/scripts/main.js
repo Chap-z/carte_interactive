@@ -13,7 +13,8 @@ function getStations() {
                 if (compt >= 6) throw BreakException;
                 var x = arret.latitude;
                 var y = arret.longitude;
-                map(x, y);
+                var idStation = arret.id;
+                map(x, y, idStation);
                 compt++;
                 return false;
             });
@@ -25,12 +26,19 @@ function getStations() {
     });
 }
 
-function stationPointer() {
-    console.log('coucou');
+function stationPointer(idStation) {
+    console.log(idStation);
+
+    ginkoAPI("TR/getTempsLieu", {
+        'nom': idStation
+    }, function (listeTemps) {
+        console.log(listeTemps);
+    });
 }
 
 
-function map(x, y) {
+
+function map(x, y, idStation) {
 
     var marker = L.marker([x, y]).addTo(mymap);
 
@@ -43,10 +51,6 @@ function map(x, y) {
 
     marker.addEventListener("click", function () {
 
-        stationPointer("")
+        stationPointer(idStation)
     }, false);
-}
-
-function getRealTime(){
-    TR/getTempsLieu
 }
