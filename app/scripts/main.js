@@ -1,4 +1,4 @@
-var mymap = L.map('mapid').setView([47.237829, 6.0240539], 13);
+var mymap = L.map('map').setView([47.237829, 6.0240539], 16);
 
 getStations();
 
@@ -36,21 +36,21 @@ function stationPointer(idStation) {
     }, function (infosArret) {
 
         console.log(infosArret);
-        var customPopup = '<h4>'+infosArret.nomExact+'</h4>';
+        var customPopup = '<h4>' + infosArret.nomExact + '</h4>';
         infosArret.listeTemps.forEach(function (prochainBus) {
 
             console.log(prochainBus);
-            customPopup += '<p style="line-height : 2;"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne +'</span> destination > '+ prochainBus.destination + '<br>'+ prochainBus.temps + '</p>';
-            
+            customPopup += '<p style="line-height : 2;"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne + '</span> destination > ' + prochainBus.destination + '<br>' + prochainBus.temps + '</p>';
+
 
         });
         var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
-            var popup = L.popup()
-                .setLatLng(latlng)
-                .setContent(customPopup)
-                .openOn(mymap);
+        var popup = L.popup()
+            .setLatLng(latlng)
+            .setContent(customPopup)
+            .openOn(mymap);
 
-            map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
+        map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
     });
 }
 
@@ -63,7 +63,17 @@ function map(x, y, idStation, customPopup) {
     // var customPopup = 'coucou'.bindPopup(customPopup);
     console.log(customPopup);
 
-    var marker = L.marker([x, y]).addTo(mymap);
+    var pointer = L.icon({
+        iconUrl: '../medias/pointer.png',
+
+        iconSize: [20, 27], // size of the icon
+        shadowSize: [50, 64] // size of the shadow
+    });
+
+
+    var marker = L.marker([x, y], {
+        icon: pointer
+    }).addTo(mymap);
 
 
     marker.addEventListener('click', function () {
@@ -81,12 +91,12 @@ var x = document.getElementById('geoloc');
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
+    } else {
         x.innerHTML = 'Votre navigateur ne prend malheureusement pas en charge la géolocalisation.';
     }
 }
 
 function showPosition(position) {
-    x.innerHTML = 'Latitude: ' + position.coords.latitude + 
-    '<br>Longitude: ' + position.coords.longitude;
+    x.innerHTML = 'Latitude: ' + position.coords.latitude +
+        '<br>Longitude: ' + position.coords.longitude;
 }

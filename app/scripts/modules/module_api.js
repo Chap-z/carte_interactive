@@ -1,4 +1,4 @@
-var mymap = L.map('mapid').setView([47.237829, 6.0240539], 13);
+var mymap = L.map('map').setView([47.237829, 6.0240539], 13);
 
 recupArrets();
 
