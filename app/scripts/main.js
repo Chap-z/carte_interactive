@@ -36,20 +36,21 @@ function stationPointer(idStation) {
     }, function (infosArret) {
 
         console.log(infosArret);
-        var customPopup = '';
+        var customPopup = '<h4>'+infosArret.nomExact+'</h4>';
         infosArret.listeTemps.forEach(function (prochainBus) {
 
             console.log(prochainBus);
-            customPopup = '<p>' + prochainBus.idLigne + '</p>'+'<p>' + prochainBus.temps + '</p>';
-            var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
+            customPopup += '<p style="line-height : 2;"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne +'</span> destination > '+ prochainBus.destination + '<br>'+ prochainBus.temps + '</p>';
+            
+
+        });
+        var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
             var popup = L.popup()
                 .setLatLng(latlng)
                 .setContent(customPopup)
                 .openOn(mymap);
 
             map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
-
-        });
     });
 }
 
