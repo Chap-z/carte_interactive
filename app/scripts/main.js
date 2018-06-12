@@ -36,39 +36,38 @@ function stationPointer(idStation) {
     }, function (infosArret) {
 
         console.log(infosArret);
-
+        var customPopup = '';
         infosArret.listeTemps.forEach(function (prochainBus) {
 
             console.log(prochainBus);
-            var customPopup = [
-                '<p>'+ prochainBus.idLigne + '</p>',
-                '<p>'+ prochainBus.temps + '</p>'
-            ];
+            customPopup = '<p>' + prochainBus.idLigne + '</p>'+'<p>' + prochainBus.temps + '</p>';
+            var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
+            var popup = L.popup()
+                .setLatLng(latlng)
+                .setContent(customPopup)
+                .openOn(mymap);
 
-            console.log(customPopup);
             map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
-            
+
         });
     });
 }
 
 
-var maker = '';
-
-
 function map(x, y, idStation, customPopup) {
 
-    var marker = L.marker([x, y]).bindPopup(customPopup).addTo(mymap);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWxlbWVoZGkiLCJhIjoiY2ppNXcydTExMG9obDNwcDZkcWFoeGthNSJ9.oaF0tVXIUtwznDIW-Ztq0Q', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: 'your.mapbox.access.token',
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
+    // var customPopup = 'coucou'.bindPopup(customPopup);
+    console.log(customPopup);
+
+    var marker = L.marker([x, y]).addTo(mymap);
+
 
     marker.addEventListener("click", function () {
 
         stationPointer(idStation);
+
     }, false);
 }
