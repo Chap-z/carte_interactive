@@ -1,12 +1,20 @@
 header {
     .navbar {
-        .nav-flex {
+        padding : 0;
+        padding-top : 15px;
+        width : 100%;
+    
+            justify-content : space-between;
             .navbar-brand {
                 img {
                     width: 100%;
                     height: auto;
                 }
             }
-        }
+            .navbar-toggler{
+                border : none;
+                padding-top : 7px;
+            }
+        
     }
 }

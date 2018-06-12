@@ -3,8 +3,8 @@ var mymap = L.map('mapid').setView([47.237829, 6.0240539], 13);
 recupArrets();
 
 function recupArrets() {
-    ginkoAPI("DR/getArrets", {}, function (listeArret) {
-        console.log("Résultat de getLignes:", listeArret);
+    ginkoAPI('DR/getArrets', {}, function (listeArret) {
+        console.log('Résultat de getLignes:', listeArret);
         var BreakException = {};
         try {
             var compt = 0;
@@ -21,7 +21,7 @@ function recupArrets() {
             if (e !== BreakException) throw e;
         }
     }, function (msg) {
-        document.getElementById("data").innerHTML = msg;
+        document.getElementById('data').innerHTML = msg;
     });
 }
 

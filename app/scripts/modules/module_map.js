@@ -3,10 +3,10 @@ var mymap = L.map('mapid').setView([47.237829, 6.0240539], 13);
 getStations();
 
 function getStations() {
-    ginkoAPI("DR/getArrets", {
+    ginkoAPI('DR/getArrets', {
 
     }, function (listeArret) {
-        console.log("Résultat de getLignes:", listeArret);
+        console.log('Résultat de getLignes:', listeArret);
         var BreakException = {};
         try {
             var compt = 0;
@@ -24,14 +24,14 @@ function getStations() {
             if (e !== BreakException) throw e;
         }
     }, function (msg) {
-        document.getElementById("data").innerHTML = msg;
+        document.getElementById('data').innerHTML = msg;
     });
 }
 
 function stationPointer(idStation) {
     console.log(idStation);
 
-    ginkoAPI("TR/getTempsLieu", {
+    ginkoAPI('TR/getTempsLieu', {
         'nom': idStation
     }, function (infosArret) {
 
@@ -66,7 +66,7 @@ function map(x, y, idStation, customPopup) {
     var marker = L.marker([x, y]).addTo(mymap);
 
 
-    marker.addEventListener("click", function () {
+    marker.addEventListener('click', function () {
 
         stationPointer(idStation);
 
