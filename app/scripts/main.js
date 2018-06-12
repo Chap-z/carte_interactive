@@ -33,22 +33,32 @@ function stationPointer(idStation) {
 
     ginkoAPI("TR/getTempsLieu", {
         'nom': idStation
-    }, function(infosArret) {
+    }, function (infosArret) {
 
         console.log(infosArret);
-        
+
         infosArret.listeTemps.forEach(function (prochainBus) {
-            
+
             console.log(prochainBus);
+            var customPopup = [
+                '<p>'+ prochainBus.idLigne + '</p>',
+                '<p>'+ prochainBus.temps + '</p>'
+            ];
+
+            console.log(customPopup);
+            map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
+            
         });
     });
 }
 
 
+var maker = '';
 
-function map(x, y, idStation) {
 
-    var marker = L.marker([x, y]).addTo(mymap);
+function map(x, y, idStation, customPopup) {
+
+    var marker = L.marker([x, y]).bindPopup(customPopup).addTo(mymap);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWxlbWVoZGkiLCJhIjoiY2ppNXcydTExMG9obDNwcDZkcWFoeGthNSJ9.oaF0tVXIUtwznDIW-Ztq0Q', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -59,6 +69,6 @@ function map(x, y, idStation) {
 
     marker.addEventListener("click", function () {
 
-        stationPointer(idStation)
+        stationPointer(idStation);
     }, false);
 }
