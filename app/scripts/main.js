@@ -1,4 +1,4 @@
-var mymap = L.map('map').setView([47.237829, 6.0240539], 16);
+var mymap = L.map('map').locate({setView:true, maxZoom: 16});
 
 getStations();
 
@@ -40,8 +40,9 @@ function stationPointer(idStation) {
         infosArret.listeTemps.forEach(function (prochainBus) {
 
             console.log(prochainBus);
-            customPopup += '<p style="line-height : 2;"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne + '</span> destination > ' + prochainBus.destination + '<br>' + prochainBus.temps + '</p>';
-
+            //customPopup += '<p style="line-height : 2;"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne + '</span> destination > ' + prochainBus.destination + '<br>' + prochainBus.temps + '</p>';
+            customPopup += '<a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne +'</span></a>';
+            customPopup += '<div class="collapse" id="collapseExample"><div class="card card-body"><p style="line-height : 2;">' + prochainBus.idLigne + 'destination > ' + prochainBus.destination + '<br>' + prochainBus.temps + '</p></div></div>';
 
         });
         var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
@@ -63,17 +64,15 @@ function map(x, y, idStation, customPopup) {
     // var customPopup = 'coucou'.bindPopup(customPopup);
     console.log(customPopup);
 
-    var pointer = L.icon({
-        iconUrl: '../medias/pointer.png',
+    // var pointer = L.icon({
+    //     iconUrl: '../medias/pointer.png',
 
-        iconSize: [20, 27], // size of the icon
-        shadowSize: [50, 64] // size of the shadow
-    });
+    //     iconSize: [20, 27], // size of the icon
+    //     shadowSize: [50, 64] // size of the shadow
+    // });
 
 
-    var marker = L.marker([x, y], {
-        icon: pointer
-    }).addTo(mymap);
+    var marker = L.marker([x, y]).addTo(mymap);
 
 
     marker.addEventListener('click', function () {
@@ -86,17 +85,17 @@ function map(x, y, idStation, customPopup) {
 
 // Code Geoloc
 
-var x = document.getElementById('geoloc');
+// var x = document.getElementById('geoloc');
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = 'Votre navigateur ne prend malheureusement pas en charge la géolocalisation.';
-    }
-}
+// function getLocation() {
+//     if (navigator.geolocation) {
+//         navigator.geolocation.getCurrentPosition(showPosition);
+//     } else {
+//         x.innerHTML = 'Votre navigateur ne prend malheureusement pas en charge la géolocalisation.';
+//     }
+// }
 
-function showPosition(position) {
-    x.innerHTML = 'Latitude: ' + position.coords.latitude +
-        '<br>Longitude: ' + position.coords.longitude;
-}
+// function showPosition(position) {
+//     x.innerHTML = 'Latitude: ' + position.coords.latitude +
+//         '<br>Longitude: ' + position.coords.longitude;
+// }
