@@ -1,7 +1,7 @@
 var mymap = L.map('map').locate({setView:true, maxZoom: 18});
 
 function getLocation() {
-    if (navigator.geolocation) {
+    if (navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
         var x = 'Votre navigateur ne prend malheureusement pas en charge la géolocalisation.';
@@ -19,39 +19,38 @@ getLocation();
 
 function getStations(latitudeUser, longitudeUser) {
     ginkoAPI('DR/getArrets', {
-        
 
-            }, function (listeArret) {
-                // var BreakException = {};
 
-                // try {
-                //     var compt = 0;
-                
-                latitudeUserMax = latitudeUser + 0.0020;
-                latitudeUserMin = latitudeUser - 0.0020;
+        }, function (listeArret) {
+            // var BreakException = {};
 
-                longitudeUserMax = longitudeUser + 0.0020;
-                longitudeUserMin = longitudeUser - 0.0020;
+            // try {
+            //     var compt = 0;
 
-                console.log(latitudeUserMin, latitudeUserMax);
-                console.log(longitudeUserMin, longitudeUserMax);
+            latitudeUserMax = latitudeUser + 0.0020;
+            latitudeUserMin = latitudeUser - 0.0020;
 
-                listeArret.forEach(function (arret) {
-                    
-                    // if (compt >= 6) throw BreakException;
-                    var x = arret.latitude;
-                    var y = arret.longitude;
-                    var idStation = arret.id;
-                    if ((latitudeUserMin < x && x < latitudeUserMax ) && (longitudeUserMin < y && y < longitudeUserMax )) {
-                        map(x, y, idStation);
-                        console.log(arret);
-                    }
-                    else{
-                        console.log('truc');
-                    }
-                    // compt++;
-                    return false;
-                });
+            longitudeUserMax = longitudeUser + 0.0020;
+            longitudeUserMin = longitudeUser - 0.0020;
+
+            console.log(latitudeUserMin, latitudeUserMax);
+            console.log(longitudeUserMin, longitudeUserMax);
+
+            listeArret.forEach(function (arret) {
+
+                // if (compt >= 6) throw BreakException;
+                var x = arret.latitude;
+                var y = arret.longitude;
+                var idStation = arret.id;
+                if ((latitudeUserMin < x && x < latitudeUserMax) && (longitudeUserMin < y && y < longitudeUserMax)) {
+                    map(x, y, idStation);
+                    console.log(arret);
+                } else {
+                    console.log('truc');
+                }
+                // compt++;
+                return false;
+            });
             // } catch (e) {
             //     if (e !== BreakException) throw e;
             // }
@@ -70,9 +69,8 @@ function stationPointer(idStation) {
         var customPopup = '<h4>' + infosArret.nomExact + '</h4>';
         infosArret.listeTemps.forEach(function (prochainBus) {
 
-            customPopup += '<a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne + '</span></a>';
-            customPopup += '<div class="collapse" id="collapseExample"><div class="card card-body"><p style="line-height : 2;">' + prochainBus.idLigne + 'destination > ' + prochainBus.destination + '<br>' + prochainBus.temps + '</p></div></div>';
-
+            customPopup += '<p class="info-bus"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.numLignePublic + '</span>  ' + prochainBus.destination + '<span class="time"> >    ' + prochainBus.temps + '</span></p>';
+            console.log(prochainBus);
         });
         var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
         var popup = L.popup()
@@ -81,9 +79,14 @@ function stationPointer(idStation) {
             .openOn(mymap);
 
         map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
+        var popUp = document.getElementsByClassName('leaflet-popup')[0];
+        popUp.parentNode.removeChild(popUp);
+        document.body.appendChild(popUp);
     });
 }
 
+var popUp = document.getElementsByClassName('.leaflet-pane.leaflet-map-pane');
+var close = document.getElementsByClassName('leaflet-popup-close-button');
 
 function map(x, y, idStation, customPopup) {
 
@@ -96,7 +99,11 @@ function map(x, y, idStation, customPopup) {
 
     marker.addEventListener('click', function () {
 
+
         stationPointer(idStation);
+        console.log(popUp);
+        popUp.style.transform = "none";
+
 
     }, false);
 }
@@ -108,17 +115,13 @@ var circle = L.circle([47.237829, 6.0240539], {
 }).addTo(mymap);
 // Code Geoloc
 
-// var x = document.getElementById('geoloc');
 
-// function getLocation() {
-//     if (navigator.geolocation) {
-//         navigator.geolocation.getCurrentPosition(showPosition);
-//     } else {
-//         x = 'Votre navigateur ne prend malheureusement pas en charge la géolocalisation.';
-//     }
-// }
+close.addEventListener('click', function () {
+
+    close.style.transform = "initial";
 
 // function showPosition(position) {
 //     x.innerHTML = 'Latitude: ' + position.coords.latitude +
 //         '<br>Longitude: ' + position.coords.longitude;
 // }
+});
