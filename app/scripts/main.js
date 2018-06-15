@@ -102,7 +102,7 @@ function map(x, y, idStation, customPopup) {
 
         stationPointer(idStation);
         console.log(popUp);
-        popUp.style.transform = "none";
+        popUp.style.transform = 'none';
 
 
     }, false);
@@ -118,7 +118,7 @@ var circle = L.circle([47.237829, 6.0240539], {
 
 close.addEventListener('click', function () {
 
-    close.style.transform = "initial";
+    close.style.transform = 'initial';
 
 // function showPosition(position) {
 //     x.innerHTML = 'Latitude: ' + position.coords.latitude +
