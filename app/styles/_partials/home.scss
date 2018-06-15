@@ -1,13 +1,69 @@
-.wrap-home{
+.wrap-home {
     height: 100%;
-    h1{
+    h1 {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size : 22px;
-        text-align : center;
-    padding : 30px 0 0 0;
+        font-size: 22px;
+        text-align: center;
+        padding: 30px 0 0 0;
     }
-    #map{
-        width : 100%;
-        height : 350px;
+    #map {        
+        width: 100%;
+        height: 70vh;
+        
     }
+}
+
+
+h4{
+    font-style : italic;
+    border-bottom : 1px solid #454545;
+    padding-bottom : 15px;
+    font-size: 18px;
+}
+.info-bus{
+    padding-bottom : 15px;
+    .time{
+        font-weight : 700;
+    }
+}
+
+.leaflet-control-container{
+    display : none;
+
+}
+
+.leaflet-popup {
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 10000;
+    width: 94vw;
+    height: 94vh;
+    bottom : 0 !important;
+}
+
+.leaflet-popup-content-wrapper {
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+    height: 100%;
+}
+.leaflet-popup-tip{
+    box-shadow : none !important;
+    border : none !important;
+}
+.leaflet-popup-content {
+    width: 100% !important;
+    height: 80vh;
+    overflow-y: scroll;
+    margin : 0;
+    padding : 0;
+    border : 32px solid white;
+    
+}
+.leaflet-popup-close-button{
+    font-size : 25px;
+    position : absolute;
+    top: 10px;
+    left : 10px;
 }
