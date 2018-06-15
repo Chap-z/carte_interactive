@@ -27,11 +27,11 @@ function getStations(latitudeUser, longitudeUser) {
             // try {
             //     var compt = 0;
 
-            latitudeUserMax = latitudeUser + 0.0020;
-            latitudeUserMin = latitudeUser - 0.0020;
+            latitudeUserMax = latitudeUser + 0.0030;
+            latitudeUserMin = latitudeUser - 0.0030;
 
-            longitudeUserMax = longitudeUser + 0.0020;
-            longitudeUserMin = longitudeUser - 0.0020;
+            longitudeUserMax = longitudeUser + 0.0030;
+            longitudeUserMin = longitudeUser - 0.0030;
 
             console.log(latitudeUserMin, latitudeUserMax);
             console.log(longitudeUserMin, longitudeUserMax);
@@ -106,22 +106,12 @@ function map(x, y, idStation, customPopup) {
 
 
     }, false);
+
 }
+
 var circle = L.circle([47.237829, 6.0240539], {
     color: 'red',
     fillColor: '#f03',
     fillOpacity: 0.5,
     radius: 200
 }).addTo(mymap);
-// Code Geoloc
-
-
-close.addEventListener('click', function () {
-
-    close.style.transform = 'initial';
-
-// function showPosition(position) {
-//     x.innerHTML = 'Latitude: ' + position.coords.latitude +
-//         '<br>Longitude: ' + position.coords.longitude;
-// }
-});
