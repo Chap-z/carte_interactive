@@ -1,4 +1,4 @@
-var mymap = L.map('map').locate({setView:true, maxZoom: 16});
+var mymap = L.map('map').locate({setView:true, maxZoom: 18});
 
 getStations();
 
@@ -71,7 +71,6 @@ function map(x, y, idStation, customPopup) {
     //     shadowSize: [50, 64] // size of the shadow
     // });
 
-
     var marker = L.marker([x, y]).addTo(mymap);
 
 
@@ -81,8 +80,12 @@ function map(x, y, idStation, customPopup) {
 
     }, false);
 }
-
-
+var circle = L.circle([47.237829, 6.0240539], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 200
+}).addTo(mymap);
 // Code Geoloc
 
 // var x = document.getElementById('geoloc');
