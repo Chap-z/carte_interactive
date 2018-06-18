@@ -76,12 +76,8 @@ function map(x, y, idStation, customPopup) {
 
     marker.addEventListener('click', function () {
 
-
         stationPointer(idStation);
-        console.log(popUp);
-        popUp.style.transform = 'none';
-
-
+        
     }, false);
 }
 
