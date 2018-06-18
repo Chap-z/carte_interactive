@@ -4,7 +4,7 @@ header {
         padding-top : 15px;
         width : 100%;
         margin : 0;
-    
+        text-align : right;
             justify-content : space-between;
             .navbar-brand {
                 img {
@@ -15,8 +15,22 @@ header {
             .navbar-toggler{
                 border : none;
                 padding-top : 7px;
+
             }
-        
+            .navbar-collapse{
+                .navbar-nav{
+                    padding-top : 20px;
+                    .nav-item{
+
+                        .nav-link{
+                            padding-right : 20px;
+                            
+
+                        }
+                    }
+
+                }
+            }
     }
 }
 
