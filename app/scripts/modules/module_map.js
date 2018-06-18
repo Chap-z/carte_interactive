@@ -1,67 +1,78 @@
-var mymap = L.map('map').setView([47.237829, 6.0240539], 13);
+var mymap = L.map('map').setView([47.237993, 6.022696], 18);
+mymap.locate({
+    setView: true
+});
 
-getStations();
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mymap);
 
-function getStations() {
-    ginkoAPI('DR/getArrets', {
+function getLocated(position) {
+    mymap.setView([position.coords.latitude, position.coords.longitude], 18);
+    getStations(position.coords.latitude, position.coords.longitude);
 
-    }, function (listeArret) {
-        console.log('Résultat de getLignes:', listeArret);
-        var BreakException = {};
-        try {
-            var compt = 0;
+}
+
+function getLocation() {
+    if (navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getLocated);
+    } else {
+        return null
+    }
+}
+
+function getStations(latitudeUser, longitudeUser) {
+    ginkoAPI('DR/getArrets', {}, function (listeArret) {
+
+            var marge = 0.0120
+
+            latitudeUserMax = latitudeUser + marge;
+            latitudeUserMin = latitudeUser - marge;
+            longitudeUserMax = longitudeUser + marge;
+            longitudeUserMin = longitudeUser - marge;
+
             listeArret.forEach(function (arret) {
-                console.log(arret);
-                if (compt >= 6) throw BreakException;
                 var x = arret.latitude;
                 var y = arret.longitude;
                 var idStation = arret.id;
-                map(x, y, idStation);
-                compt++;
+
+                if ((latitudeUserMin < x && x < latitudeUserMax) && (longitudeUserMin < y && y < longitudeUserMax)) {
+                    map(x, y, idStation);
+                }
                 return false;
             });
-        } catch (e) {
-            if (e !== BreakException) throw e;
-        }
-    }, function (msg) {
-        document.getElementById('data').innerHTML = msg;
-    });
+        },
+        function (msg) {
+            document.getElementById('data').innerHTML = msg;
+        });
 }
 
 function stationPointer(idStation) {
-    console.log(idStation);
 
     ginkoAPI('TR/getTempsLieu', {
         'nom': idStation
     }, function (infosArret) {
 
-        console.log(infosArret);
-        var customPopup = '';
+        var customPopup = '<h4>' + infosArret.nomExact + '</h4>';
         infosArret.listeTemps.forEach(function (prochainBus) {
 
-            console.log(prochainBus);
-            customPopup += '<p> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.idLigne +'</span>:'+ prochainBus.temps + '</p>';
-            
-
+            customPopup += '<p class="info-bus"> <span style="background-color:#' + prochainBus.couleurFond + '; color:#' + prochainBus.couleurTexte + '; padding : 5px 5px; min-width : 30px;">' + prochainBus.numLignePublic + '</span>  ' + prochainBus.destination + '<span class="time"> >    ' + prochainBus.temps + '</span></p>';
         });
         var latlng = L.latLng(infosArret.latitude, infosArret.longitude);
-            var popup = L.popup()
-                .setLatLng(latlng)
-                .setContent(customPopup)
-                .openOn(mymap);
+        var popup = L.popup()
+            .setLatLng(latlng)
+            .setContent(customPopup)
+            .openOn(mymap);
 
-            map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
+        map(infosArret.longitude, infosArret.latitude, infosArret.id, customPopup);
+        var popUp = document.getElementsByClassName('leaflet-popup')[0];
+        popUp.parentNode.removeChild(popUp);
+        document.body.appendChild(popUp);
+
     });
 }
 
-
 function map(x, y, idStation, customPopup) {
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mymap);
-    // var customPopup = 'coucou'.bindPopup(customPopup);
-    console.log(customPopup);
 
     var marker = L.marker([x, y]).addTo(mymap);
 
@@ -71,4 +82,24 @@ function map(x, y, idStation, customPopup) {
         stationPointer(idStation);
 
     }, false);
+
 }
+var close = document.getElementsByClassName('leaflet-popup-close-button');
+
+document.addEventListener('click', function (e) {
+    if (e = close) {
+        afterPopup();
+    }
+}, false);
+
+
+function afterPopup() {
+
+    getLocation();
+}
+
+// quand la page est chargée, on lance nos fonctions
+$(function () {
+    getStations(47.237993, 6.022696);
+    getLocation();
+})

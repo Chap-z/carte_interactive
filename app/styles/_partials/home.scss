@@ -8,9 +8,6 @@
         color: $dark-grey;
         border-bottom : 1px solid rgba($color: $dark-grey, $alpha: 0.2); 
         margin-bottom : 30px;
-        span{
-            text-transform: uppercase;
-        }
 
     }
     #map {
@@ -25,12 +22,14 @@ h4 {
     padding-bottom: 15px;
     font-size: 18px;
     color: $dark-grey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
 
 .info-bus {
     padding-bottom: 15px;
     color: $dark-grey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     .time {
         font-weight: 700;
     }
@@ -45,8 +44,8 @@ h4 {
     top: 0 !important;
     left: 0 !important;
     z-index: 10000;
-    width: 100vw;
-    height: 94vh;
+    width: 98vw;
+    height: 96vh;
     bottom: 0 !important;
     color: $dark-grey;
     .leaflet-popup-content-wrapper {
@@ -61,10 +60,10 @@ h4 {
     }
     .leaflet-popup-content {
         width: 100% !important;
-        height: 80vh;
+        height: 98vh;
         overflow-y: scroll;
         margin: 0;
-        padding: 50px 50px;
+        padding: 60px 10px 50px 30px;
         border: 32px solid white;
         color: $dark-grey;
     }
