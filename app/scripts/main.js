@@ -6,7 +6,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 function getLocated(position) {
-    mymap.setView([position.coords.latitude, position.coords.longitude], 13);
+    mymap.setView([position.coords.latitude, position.coords.longitude], 18);
     getStations(position.coords.latitude, position.coords.longitude);
 }
 
@@ -20,7 +20,7 @@ function getLocation() {
 
 function getStations(latitudeUser, longitudeUser) {
     ginkoAPI('DR/getArrets', {}, function (listeArret) {
-        var marge = 0.0020
+        var marge = 0.0090
 
         latitudeUserMax = latitudeUser + marge;
         latitudeUserMin = latitudeUser - marge;
@@ -84,6 +84,8 @@ function map(x, y, idStation, customPopup) {
 
     }, false);
 }
+
+
 
 // quand la page est chargée, on lance nos fonctions
 $(function() {
