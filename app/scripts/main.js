@@ -89,11 +89,9 @@ var close = document.getElementsByClassName('leaflet-popup-close-button');
 
 document.addEventListener('click', function (e) {
     if (e = close) {
-        getLocationMarker(x, y);
+        getLocationMarker();
     }
 }, false);
-
-
 
 function getLocationMarker(x, y){
     mymap.setView([x, y], 18);
